@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 14:45:23 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/03 02:00:34 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/10 23:31:25 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,6 @@ void	ft_parse_info(int argc, char *argv[], t_info *info)
 	info->time_to_sleep = ft_atoi(argv[4]);
 	if (argc == 6)
 		info->num_of_time_each_philo_must_eat = ft_atoi(argv[5]);
+	else if (argc == 5)
+		info->num_of_time_each_philo_must_eat = -1;
 }
