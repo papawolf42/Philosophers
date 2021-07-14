@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 14:46:53 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/10 23:45:27 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/14 20:53:50 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,8 +91,9 @@ struct			s_common
 	pthread_mutex_t	m_enter;
 	pthread_mutex_t	m_check_die;
 	pthread_mutex_t	m_full;
-	int				num_full;
-	int				num_entered;
+	int				count_full;
+	int				count_entered;
+	int				num_starve;
 	t_bool			flag_all_eaten;
 	t_bool			flag_all_entered;
 	t_bool			flag_someone_died;

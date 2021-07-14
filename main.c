@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 14:45:23 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/10 23:31:25 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/12 19:06:56 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,18 @@ void	ft_parse_info(int argc, char *argv[], t_info *info)
 		info->num_of_time_each_philo_must_eat = ft_atoi(argv[5]);
 	else if (argc == 5)
 		info->num_of_time_each_philo_must_eat = -1;
+}
+
+t_error	ft_set_up_dining(t_info *info)
+{
+	t_philo			*philo;
+	pthread_mutex_t	*fork;
+	t_common		common;
+
+	if (ft_alloc_vars(&philo, &fork, info->num_of_philos) != no_error)
+		return (err_malloc_fail);
+	ft_init_common(info, &common);
+	ft_init_vars(info, philo, fork, &common);
+	ft_enter_dining_room(info, philo, &common);
+	return (no_error);
 }
