@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/04 20:17:20 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/14 20:21:02 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/15 12:08:54 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,15 @@ void	ft_sleep(t_philo *philo, long time)
 
 	target = time + ft_time();
 	deadline = philo->time_last_eat + philo->info->time_to_die;
-	usleep(time * 950);
+	usleep(time * 900);
 	while (target > ft_time())
 		usleep(philo->common->time_delay);
+	pthread_mutex_lock(&philo->common->m_print);
+	if (deadline < ft_time())
+	{
+		ft_putstr_state(STR_DIED, died, ft_time() - philo->common->time_start,
+			philo->num);
+		exit (1);
+	}
+	pthread_mutex_unlock(&philo->common->m_print);
 }

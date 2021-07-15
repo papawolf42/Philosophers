@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 00:00:26 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/14 20:46:45 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/14 23:57:19 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,9 @@ void	ft_loop(t_info *info, t_philo *philo, t_common *common)
 					philo[i].num);
 				exit (0);
 			}
-			usleep(1);
 			i++;
 		}
 		pthread_mutex_unlock(&common->m_print);
-		usleep(1000);
+		usleep(10);
 	}
 }
