@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 14:46:53 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/14 20:53:50 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/22 18:43:18 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include <sys/time.h>
 
 # define STR_DIED		" \e[91mdied\e[0m\n"
+# define STR_TRY_FORK	" \e[94mis trying to get a fork\e[0m\n"
 # define STR_FORK		" \e[93mhas taken a fork\e[0m\n"
 # define STR_EAT		" \e[92mis eating\e[0m\n"
 # define STR_SLEEP		" \e[96mis sleeping\e[0m\n"
@@ -35,6 +36,7 @@
 # define DECIMAL		"0123456789"
 # define STDOUT			1
 
+# define DIE			1
 # define FULL			1
 # define HUNGRY			0
 
@@ -56,7 +58,7 @@ enum
 enum			e_bool
 {
 	true = 1,
-	false = 0
+	false = 0,
 };
 
 enum			e_state
@@ -65,7 +67,8 @@ enum			e_state
 	eating = 20,
 	sleeping = 22,
 	thinking = 23,
-	died = 15
+	died = 15,
+	trying_fork = 34
 };
 
 enum			e_error
@@ -74,29 +77,25 @@ enum			e_error
 	err_malloc_fail = 1
 };
 
-struct			s_info
-{
-	int		num_of_philos;
-	int		time_to_die;
-	int		time_to_eat;
-	int		time_to_sleep;
-	int		num_of_time_each_philo_must_eat;
-};
-
 struct			s_common
 {
+	int				num_of_philos;
+	int				time_to_die;
+	int				time_to_eat;
+	int				time_to_sleep;
+	int				num_of_time_each_philo_must_eat;
 	long			time_start;
 	long			time_delay;
-	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_enter;
+	pthread_mutex_t	m_print;
 	pthread_mutex_t	m_check_die;
 	pthread_mutex_t	m_full;
 	int				count_full;
 	int				count_entered;
 	int				num_starve;
+	t_bool			flag_died;
 	t_bool			flag_all_eaten;
 	t_bool			flag_all_entered;
-	t_bool			flag_someone_died;
 };
 
 struct			s_philo
@@ -104,33 +103,37 @@ struct			s_philo
 	int				index;
 	int				num;
 	pthread_t		thread;
-	pthread_mutex_t	*fork;
+	pthread_mutex_t	*m_fork;
+	int				*fork;
 	int				rfork;
 	int				lfork;
 	long			time_last_eat;
 	long			times_eat;
-	t_info			*info;
 	t_common		*common;
 };
 
 /*
 main.c
 */
-void	ft_parse_info(int argc, char *argv[], t_info *info);
-t_error	ft_set_up_dining(t_info *info);
+void	ft_parse_info(int argc, char *argv[], t_common *common);
+t_error	ft_set_up_dining(t_philo **philo, t_common *common);
+void	ft_enter_dining_room(t_philo *philo, t_common *common);
 
 int		ft_atoi(const char *nptr);
 
 /*
 set_up_dining.c
 */
-t_error	ft_set_up_dining(t_info *info);
-t_error	ft_alloc_vars(t_philo **philo, pthread_mutex_t **fork, int num);
-void	ft_init_common(t_info *info, t_common *common);
-void	ft_init_vars(t_info *info, t_philo *philo, pthread_mutex_t *fork,
-			t_common *common);
-void	ft_enter_dining_room(t_info *info, t_philo *philo, t_common *common);
-void	ft_loop(t_info *info, t_philo *philo, t_common *common);
+t_error	ft_alloc_vars(t_philo **philo, pthread_mutex_t **m_fork,
+			int **fork, int num);
+void	ft_init_common(t_common *common, int num);
+void	ft_init_vars(t_philo *philo, pthread_mutex_t *m_fork,
+			int *fork, t_common *common);
+
+/*
+loop.c
+*/
+void	ft_loop(t_philo *philo, t_common *common);
 
 /*
 dining.c
@@ -143,18 +146,24 @@ void	ft_sleeping(t_philo *philo);
 void	ft_thinking(t_philo *philo);
 
 /*
+fork.c
+*/
+void	ft_take_fork(t_philo *philo, int idx_fork);
+void	ft_takedown_fork(t_philo *philo, int idx_fork);
+
+/*
 print.c
 */
 void	ft_print_state(t_philo *philo, t_state state);
 void	ft_putstr_state(char *str, t_state state, long now, int philo_num);
 void	ft_putstr(char *s, int strlen);
+int		ft_is_dead(t_philo *philo);
 
 /*
 time.c
 */
 long	ft_time(void);
 void	ft_sleep(t_philo *philo, long time);
-void	ft_wait(t_philo *philo);
 
 /*
 putnbr.c

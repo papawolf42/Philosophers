@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/04 12:53:33 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/10 23:10:39 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/22 18:45:36 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,18 @@ void	ft_print_state(t_philo *philo, t_state state)
 {
 	long	now;
 
+	if (!philo->common->flag_died && ft_is_dead(philo))
+		return ;
 	pthread_mutex_lock(&(philo->common->m_print));
-	now = ft_time() - philo->common->time_start;
-	if (state == died)
+	if (philo->common->flag_died)
 	{
-		ft_putstr_state(STR_DIED, state, now, philo->num);
-		philo->common->flag_someone_died = true;
-		pthread_mutex_unlock(&philo->common->m_check_die);
+		pthread_mutex_unlock(&(philo->common->m_print));
 		return ;
 	}
-	else if (state == forking)
+	now = ft_time() - philo->common->time_start;
+	if (state == trying_fork)
+		ft_putstr_state(STR_TRY_FORK, state, now, philo->num);
+	if (state == forking)
 		ft_putstr_state(STR_FORK, state, now, philo->num);
 	else if (state == eating)
 		ft_putstr_state(STR_EAT, state, now, philo->num);
@@ -49,4 +51,25 @@ void	ft_putstr(char *s, int strlen)
 	if (!s)
 		return ;
 	write(STDOUT, s, strlen);
+}
+
+int	ft_is_dead(t_philo *philo)
+{
+	pthread_mutex_lock(&(philo->common->m_print));
+	if (philo->common->flag_died != 0)
+	{
+		pthread_mutex_unlock(&(philo->common->m_print));
+		return (true);
+	}
+	if (philo->time_last_eat + philo->common->time_to_die < ft_time())
+	{
+		write(1, "thread\n", 7);
+		ft_putstr_state(STR_DIED, died, ft_time() - philo->common->time_start,
+			philo->num);
+		philo->common->flag_died = true;
+		pthread_mutex_unlock(&(philo->common->m_print));
+		return (true);
+	}
+	pthread_mutex_unlock(&(philo->common->m_print));
+	return (false);
 }

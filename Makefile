@@ -6,7 +6,7 @@
 #    By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/02 01:43:12 by gunkim            #+#    #+#              #
-#    Updated: 2021/07/09 02:10:16 by gunkim           ###   ########.fr        #
+#    Updated: 2021/07/22 21:10:22 by gunkim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,8 @@ BONUS       := philo_bonus
 # =========================
 
 CC        := gcc
-CFLAGS    := -g
+CFLAGS    := 
+# CFLAGS    := -g
 # CFLAGS    := -g3 -fsanitize=address
 CFLAGS    += -Wall
 CFLAGS    += -Wextra
@@ -42,8 +43,10 @@ RFLAGS    := -rf
 
 SRCS := \
 	dining.c \
+	fork.c \
 	ft_atoi.c \
 	ft_putnbr.c \
+	loop.c \
 	main.c \
 	print.c \
 	set_up_dining.c \
