@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 14:46:53 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/22 23:25:45 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/23 15:03:38 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@
 # define STDOUT			1
 
 # define DIE			1
-# define FULL			1
-# define HUNGRY			0
+# define EXIT			1
+# define CONTINUE		0
 
 /*
 struct
@@ -143,8 +143,8 @@ dining.c
 void	*ft_dining(void *var);
 void	ft_sitting(t_philo *philo);
 int		ft_eating(t_philo *philo);
-void	ft_sleeping(t_philo *philo);
-void	ft_thinking(t_philo *philo);
+int		ft_sleeping(t_philo *philo);
+int		ft_thinking(t_philo *philo);
 
 /*
 fork.c

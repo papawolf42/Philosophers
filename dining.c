@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 00:25:06 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/22 23:22:11 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/23 15:03:33 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,12 @@ void	*ft_dining(void *var)
 	ft_sitting(philo);
 	while (!philo->common->flag_died)
 	{
-		if (ft_eating(philo) == FULL)
+		if (ft_eating(philo) == EXIT)
 			break ;
-		ft_sleeping(philo);
-		ft_thinking(philo);
+		if (ft_sleeping(philo) == EXIT)
+			break ;
+		if (ft_thinking(philo) == EXIT)
+			break ;
 	}
 	ft_ending(philo);
 	return (NULL);
@@ -49,21 +51,29 @@ int	ft_eating(t_philo *philo)
 	ft_print_state(philo, forking);
 	philo->time_last_eat = ft_time();
 	ft_print_state(philo, eating);
+	if (philo->common->flag_died)
+		return (EXIT);
 	ft_sleep(philo, philo->common->time_to_eat);
 	ft_takedown_fork(philo, philo->rfork);
 	ft_takedown_fork(philo, philo->lfork);
 	if (++philo->times_eat == philo->common->num_of_time_each_philo_must_eat)
-		return (FULL);
-	return (HUNGRY);
+		return (EXIT);
+	return (CONTINUE);
 }
 
-void	ft_sleeping(t_philo *philo)
+int	ft_sleeping(t_philo *philo)
 {
 	ft_print_state(philo, sleeping);
+	if (philo->common->flag_died)
+		return (EXIT);
 	ft_sleep(philo, philo->common->time_to_sleep);
+	return (CONTINUE);
 }
 
-void	ft_thinking(t_philo *philo)
+int	ft_thinking(t_philo *philo)
 {
 	ft_print_state(philo, thinking);
+	if (philo->common->flag_died)
+		return (EXIT);
+	return (CONTINUE);
 }
