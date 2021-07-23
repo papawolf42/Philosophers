@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 14:46:53 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/22 18:43:18 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/22 23:25:45 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include <sys/time.h>
 
 # define STR_DIED		" \e[91mdied\e[0m\n"
-# define STR_TRY_FORK	" \e[94mis trying to get a fork\e[0m\n"
 # define STR_FORK		" \e[93mhas taken a fork\e[0m\n"
 # define STR_EAT		" \e[92mis eating\e[0m\n"
 # define STR_SLEEP		" \e[96mis sleeping\e[0m\n"
@@ -68,7 +67,6 @@ enum			e_state
 	sleeping = 22,
 	thinking = 23,
 	died = 15,
-	trying_fork = 34
 };
 
 enum			e_error
@@ -133,7 +131,10 @@ void	ft_init_vars(t_philo *philo, pthread_mutex_t *m_fork,
 /*
 loop.c
 */
+void	ft_enter_dining_room(t_philo *philo, t_common *common);
 void	ft_loop(t_philo *philo, t_common *common);
+void	ft_join_thread(t_philo *philo, t_common *common);
+void	ft_ending(t_philo *philo);
 
 /*
 dining.c

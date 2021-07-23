@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 14:31:39 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/22 16:35:54 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/23 00:04:18 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,67 +33,52 @@ void	ft_enter_dining_room(t_philo *philo, t_common *common)
 	// {
 	// 	pthread_join(philo[i].thread, NULL);
 	// }
+	usleep(common->time_to_die * 1000);
 	ft_loop(philo, common);
-	usleep(3000000);
+	ft_join_thread(philo, common);
 }
 
 void	ft_loop(t_philo *philo, t_common *common)
 {
 	int		i;
-	long	moment;
 
-	usleep(common->time_to_die * 1000);
 	while (1)
 	{
+		if (common->flag_died
+			|| common->count_full == common->num_of_philos)
+			return ;
 		i = -1;
 		while (++i < common->num_of_philos)
 		{
 			pthread_mutex_lock(&common->m_print);
-			if (common->flag_died || common->count_full == common->num_of_philos)
+			if (philo[i].time_last_eat + common->time_to_die < ft_time())
 			{
+				common->flag_died = true;
+				ft_putstr_state(STR_DIED, died, ft_time() - common->time_start,
+					philo[i].num);
 				pthread_mutex_unlock(&common->m_print);
 				return ;
 			}
-			moment = ft_time();
-			if (philo[i].time_last_eat + common->time_to_die < moment)
-			{
-				write(1, "main\n", 5);
-				ft_putstr_state(STR_DIED, died, ft_time() - common->time_start,
-					philo[i].num);
-				exit(1);
-			}
 			pthread_mutex_unlock(&common->m_print);
-			usleep(5);
+			usleep(1);
 		}
-			usleep(common->time_delay);
+		usleep(common->time_delay);
 	}
 }
 
-// int	ft_loop(t_common *info, t_philo *philo, t_common *common)
-// {
-// 	int		i;
-// 	long	moment;
+void	ft_join_thread(t_philo *philo, t_common *common)
+{
+	(void)philo;
+	while (common->count_entered != 0)
+		usleep(common->time_delay);
+	write(1, "end\n", 4);
+}
 
-// 	usleep(info->time_to_die * 1000);
-// 	while (1)
-// 	{
-// 		i = 0;
-// 		if (common->count_full == info->num_of_philos)
-// 			return (FULL);
-// 		if (philo->common->)
-// 		pthread_mutex_lock(&common->m_check_die);
-// 		while (i < info->num_of_philos)
-// 		{
-// 			moment = ft_time();
-// 			if (philo[i].time_last_eat + info->time_to_die < moment
-// 				&& common->count_full != info->num_of_philos)
-// 			{
-// 				ft_putstr_state(STR_DIED, died, ft_time() - common->time_start,
-// 					philo[i].num);
-// 				exit(1);
-// 			}
-// 			i++;
-// 		}
-// 		pthread_mutex_unlock(&common->m_check_die);
-// 	}
-// }
+void	ft_ending(t_philo *philo)
+{
+	// ft_putnbr(philo->num);
+	// write(1, "\n", 1);
+	pthread_mutex_lock(&philo->common->m_enter);
+	philo->common->count_entered--;
+	pthread_mutex_unlock(&philo->common->m_enter);
+}

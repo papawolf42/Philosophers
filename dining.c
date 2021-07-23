@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 00:25:06 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/22 22:02:56 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/07/22 23:22:11 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,7 @@ void	*ft_dining(void *var)
 		ft_sleeping(philo);
 		ft_thinking(philo);
 	}
-	// pthread_mutex_lock(&philo->common->m_full);
-	// pthread_mutex_lock(&philo->common->m_print);
-	// philo->common->count_full++;
-	// ft_putstr("philo ", 6);
-	// ft_putnbr(philo->num);
-	// ft_putstr("\n", 1);
-	// pthread_mutex_unlock(&philo->common->m_print);
-	// pthread_mutex_unlock(&philo->common->m_full);
+	ft_ending(philo);
 	return (NULL);
 }
 
