@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 00:00:26 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/22 16:35:25 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/08/07 01:17:59 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ void	ft_init_common(t_common *common, int num)
 	common->flag_all_entered = false;
 	pthread_mutex_init(&common->m_enter, NULL);
 	pthread_mutex_init(&common->m_print, NULL);
-	pthread_mutex_init(&common->m_check_die, NULL);
 }
 
 void	ft_init_vars(t_philo *philo, pthread_mutex_t *m_fork,

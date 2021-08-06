@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 14:46:53 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/23 15:03:38 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/08/07 01:37:38 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ struct			s_common
 	long			time_delay;
 	pthread_mutex_t	m_enter;
 	pthread_mutex_t	m_print;
-	pthread_mutex_t	m_check_die;
 	pthread_mutex_t	m_full;
 	int				count_full;
 	int				count_entered;
@@ -116,6 +115,7 @@ main.c
 void	ft_parse_info(int argc, char *argv[], t_common *common);
 t_error	ft_set_up_dining(t_philo **philo, t_common *common);
 void	ft_enter_dining_room(t_philo *philo, t_common *common);
+void	ft_clean_dining_room(t_philo *philo, t_common *common);
 
 int		ft_atoi(const char *nptr);
 
@@ -131,9 +131,8 @@ void	ft_init_vars(t_philo *philo, pthread_mutex_t *m_fork,
 /*
 loop.c
 */
-void	ft_enter_dining_room(t_philo *philo, t_common *common);
-void	ft_loop(t_philo *philo, t_common *common);
-void	ft_join_thread(t_philo *philo, t_common *common);
+void	ft_loop(t_philo *philo, t_common *common, int i);
+void	ft_join_thread(t_common *common);
 void	ft_ending(t_philo *philo);
 
 /*
@@ -156,7 +155,8 @@ void	ft_takedown_fork(t_philo *philo, int idx_fork);
 print.c
 */
 void	ft_print_state(t_philo *philo, t_state state);
-void	ft_putstr_state(char *str, t_state state, long now, int philo_num);
+void	ft_putstr_state(char *str, t_state state,
+			t_common *common, int philo_num);
 void	ft_putstr(char *s, int strlen);
 int		ft_is_dead(t_philo *philo);
 
@@ -174,5 +174,11 @@ int		ft_count_digit(long nbr);
 void	ft_recursive_putnbr_fd(long n, int digit, long *base, int i);
 void	ft_putnbr_ms(long n);
 void	ft_recursive_putnbr_fd_ms(long n, int digit, long *base, int *save);
+
+/*
+destroy.c
+*/
+void	ft_destroy_mutex(t_philo *philo, t_common *common);
+void	ft_destroy_allocated(t_philo *philo);
 
 #endif
