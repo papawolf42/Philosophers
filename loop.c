@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/15 14:31:39 by gunkim            #+#    #+#             */
-/*   Updated: 2021/08/07 01:37:17 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/08/07 22:04:29 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_loop(t_philo *philo, t_common *common, int i)
 {
 	while (1)
 	{
-		if (common->count_full == common->num_of_philos)
+		if (common->count_entered == 0)
 			return ;
 		i = -1;
 		while (++i < common->num_of_philos)
@@ -35,21 +35,14 @@ void	ft_loop(t_philo *philo, t_common *common, int i)
 				return ;
 			}
 			pthread_mutex_unlock(&common->m_print);
-			usleep(5);
+			usleep(common->time_delay);
 		}
 		usleep(common->time_delay);
 	}
 }
 
-void	ft_join_thread(t_common *common)
+void	ft_wait_thread(t_common *common)
 {
 	while (common->count_entered != 0)
 		usleep(common->time_delay);
-}
-
-void	ft_ending(t_philo *philo)
-{
-	pthread_mutex_lock(&philo->common->m_enter);
-	philo->common->count_entered--;
-	pthread_mutex_unlock(&philo->common->m_enter);
 }

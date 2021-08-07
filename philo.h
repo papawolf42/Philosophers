@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 14:46:53 by gunkim            #+#    #+#             */
-/*   Updated: 2021/08/07 01:37:38 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/08/07 21:55:05 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,7 @@ void	ft_init_vars(t_philo *philo, pthread_mutex_t *m_fork,
 loop.c
 */
 void	ft_loop(t_philo *philo, t_common *common, int i);
-void	ft_join_thread(t_common *common);
-void	ft_ending(t_philo *philo);
+void	ft_wait_thread(t_common *common);
 
 /*
 dining.c
@@ -142,8 +141,8 @@ dining.c
 void	*ft_dining(void *var);
 void	ft_sitting(t_philo *philo);
 int		ft_eating(t_philo *philo);
-int		ft_sleeping(t_philo *philo);
-int		ft_thinking(t_philo *philo);
+int		ft_sleeping_and_thinking(t_philo *philo);
+void	ft_quiting(t_philo *philo);
 
 /*
 fork.c

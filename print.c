@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/04 12:53:33 by gunkim            #+#    #+#             */
-/*   Updated: 2021/08/07 01:38:14 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/08/07 21:59:52 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 void	ft_print_state(t_philo *philo, t_state state)
 {
-	long	now;
-
 	if (ft_is_dead(philo))
 		return ;
 	pthread_mutex_lock(&(philo->common->m_print));
@@ -24,7 +22,6 @@ void	ft_print_state(t_philo *philo, t_state state)
 		pthread_mutex_unlock(&(philo->common->m_print));
 		return ;
 	}
-	now = ft_time() - philo->common->time_start;
 	if (state == forking)
 		ft_putstr_state(STR_FORK, state, philo->common, philo->num);
 	else if (state == eating)

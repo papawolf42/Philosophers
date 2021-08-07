@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 00:25:06 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/23 15:03:33 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/08/07 21:48:24 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,10 @@ void	*ft_dining(void *var)
 	{
 		if (ft_eating(philo) == EXIT)
 			break ;
-		if (ft_sleeping(philo) == EXIT)
-			break ;
-		if (ft_thinking(philo) == EXIT)
+		if (ft_sleeping_and_thinking(philo) == EXIT)
 			break ;
 	}
-	ft_ending(philo);
+	ft_quiting(philo);
 	return (NULL);
 }
 
@@ -61,19 +59,21 @@ int	ft_eating(t_philo *philo)
 	return (CONTINUE);
 }
 
-int	ft_sleeping(t_philo *philo)
+int	ft_sleeping_and_thinking(t_philo *philo)
 {
 	ft_print_state(philo, sleeping);
 	if (philo->common->flag_died)
 		return (EXIT);
 	ft_sleep(philo, philo->common->time_to_sleep);
-	return (CONTINUE);
-}
-
-int	ft_thinking(t_philo *philo)
-{
 	ft_print_state(philo, thinking);
 	if (philo->common->flag_died)
 		return (EXIT);
 	return (CONTINUE);
+}
+
+void	ft_quiting(t_philo *philo)
+{
+	pthread_mutex_lock(&philo->common->m_enter);
+	philo->common->count_entered--;
+	pthread_mutex_unlock(&philo->common->m_enter);
 }

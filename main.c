@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 14:45:23 by gunkim            #+#    #+#             */
-/*   Updated: 2021/08/07 01:37:21 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/08/07 23:24:06 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_enter_dining_room(t_philo *philo, t_common *common)
 	common->flag_all_entered = true;
 	usleep(common->time_to_die * 1000);
 	ft_loop(philo, common, 0);
-	ft_join_thread(common);
+	ft_wait_thread(common);
 }
 
 void	ft_clean_dining_room(t_philo *philo, t_common *common)
