@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/03 00:00:26 by gunkim            #+#    #+#             */
-/*   Updated: 2021/08/07 01:17:59 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/08/26 22:52:28 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,11 +40,8 @@ t_error	ft_alloc_vars(t_philo **philo, pthread_mutex_t **m_fork,
 void	ft_init_common(t_common *common, int num)
 {
 	common->time_delay = num * 2.3;
-	common->count_full = 0;
 	common->count_entered = 0;
-	common->num_starve = num;
 	common->flag_died = false;
-	common->flag_all_eaten = false;
 	common->flag_all_entered = false;
 	pthread_mutex_init(&common->m_enter, NULL);
 	pthread_mutex_init(&common->m_print, NULL);

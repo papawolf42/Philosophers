@@ -6,7 +6,7 @@
 #    By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/07/02 01:43:12 by gunkim            #+#    #+#              #
-#    Updated: 2021/08/07 21:58:34 by gunkim           ###   ########.fr        #
+#    Updated: 2021/08/26 18:33:08 by gunkim           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ BONUS       := philo_bonus
 
 CC        := gcc
 CFLAGS    := 
-# CFLAGS    := -g
+CFLAGS    := -g
 # CFLAGS    := -g3 -fsanitize=address
 CFLAGS    += -Wall
 CFLAGS    += -Wextra

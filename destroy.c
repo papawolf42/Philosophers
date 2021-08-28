@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/08/07 01:12:07 by gunkim            #+#    #+#             */
-/*   Updated: 2021/08/07 01:21:38 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/08/26 18:41:05 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,6 @@ void	ft_destroy_mutex(t_philo *philo, t_common *common)
 void	ft_destroy_allocated(t_philo *philo)
 {
 	free(philo->fork);
+	free(philo->m_fork);
 	free(philo);
 }

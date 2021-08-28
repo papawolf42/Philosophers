@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/02 14:46:53 by gunkim            #+#    #+#             */
-/*   Updated: 2021/08/07 21:55:05 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/08/27 16:46:22 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,12 +86,8 @@ struct			s_common
 	long			time_delay;
 	pthread_mutex_t	m_enter;
 	pthread_mutex_t	m_print;
-	pthread_mutex_t	m_full;
-	int				count_full;
 	int				count_entered;
-	int				num_starve;
 	t_bool			flag_died;
-	t_bool			flag_all_eaten;
 	t_bool			flag_all_entered;
 };
 
@@ -112,7 +108,7 @@ struct			s_philo
 /*
 main.c
 */
-void	ft_parse_info(int argc, char *argv[], t_common *common);
+int		ft_parse_info(int argc, char *argv[], t_common *common);
 t_error	ft_set_up_dining(t_philo **philo, t_common *common);
 void	ft_enter_dining_room(t_philo *philo, t_common *common);
 void	ft_clean_dining_room(t_philo *philo, t_common *common);
