@@ -6,7 +6,7 @@
 /*   By: gunkim <gunkim@student.42seoul.kr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/04 20:17:20 by gunkim            #+#    #+#             */
-/*   Updated: 2021/07/19 15:56:25 by gunkim           ###   ########.fr       */
+/*   Updated: 2021/08/28 14:46:01 by gunkim           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	ft_sleep(t_philo *philo, long time)
 	long	target;
 
 	target = time + ft_time();
-	// usleep(time * 900);
+	usleep(time * 900);
 	while (target > ft_time())
 		usleep(philo->common->time_delay);
 }

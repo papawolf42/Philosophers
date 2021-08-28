@@ -70,26 +70,26 @@ void	ft_putnbr_ms(long n)
 	ft_recursive_putnbr_fd_ms(n, digit - 1, base, save);
 }
 
-void	ft_recursive_putnbr_fd_ms(long n, int digit, long *base, int *save)
+void	ft_recursive_putnbr_fd_ms(long n, int dig, long *base, int *save)
 {
 	int	i;
 
 	i = 10;
-	while (!(n < base[digit] * (save[digit] + 1) 
-		&& n >= base[digit] * (save[digit])) && --i)
+	while (!(n < base[dig] * (save[dig] + 1) && n >= base[dig] * (save[dig]))
+		&& --i)
 	{
-		save[digit]++;
-		if (save[digit] == 10)
-			save[digit] = 0;
+		save[dig]++;
+		if (save[dig] == 10)
+			save[dig] = 0;
 	}
 	if (i == 0)
 	{
 		write(1, "0", 1);
-		ft_recursive_putnbr_fd_ms(n, digit - 1, base, save);
+		ft_recursive_putnbr_fd_ms(n, dig - 1, base, save);
 		return ;
 	}
-	write(STDOUT, &DECIMAL[save[digit]], 1);
-	if (digit > 0)
-		ft_recursive_putnbr_fd_ms(n - (base[digit] * save[digit]), digit - 1,
+	write(STDOUT, &DECIMAL[save[dig]], 1);
+	if (dig > 0)
+		ft_recursive_putnbr_fd_ms(n - (base[dig] * save[dig]), dig - 1,
 			base, save);
 }
